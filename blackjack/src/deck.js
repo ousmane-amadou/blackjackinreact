@@ -1,4 +1,5 @@
-const deck = [];
+
+
 const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
 
 const values = [
@@ -18,14 +19,16 @@ const values = [
 ];
 
 // Each card is represented by a Javascript object
-suits.forEach(suit => {
-  values.forEach(card => {
-    deck.push({
-      suit: suit,
-      name: card.name,
-      value: card.value
+export const createDeck = () => {
+  const deck = [];
+  suits.forEach(suit => {
+    values.forEach(card => {
+      deck.push({
+        suit: suit,
+        name: card.name,
+        value: card.value
+      });
     });
   });
-});
-
-export default deck;
+  return deck
+}
