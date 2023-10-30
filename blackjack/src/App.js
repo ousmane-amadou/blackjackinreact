@@ -20,12 +20,21 @@ function App() {
     e.preventDefault()
   }
   
+  const getCardImageURL = (card) => {
+    return (
+      "assets/cards/" + "card_" + card.suit.toLowerCase() + "_" + 
+        card.name.toLowerCase() + ".png"
+    )
+  }
+
   return (
     <div className="App">
       <h1>Player 1 Hand </h1>
       { 
         playerHand.map((card, index) => (
-            <p key={index}>{card.name}, {card.suit}, {card.value}</p>
+            <img 
+              key={index}
+              src={getCardImageURL(card)}/>
         ))
       }
       <button onClick={handleHit}>
