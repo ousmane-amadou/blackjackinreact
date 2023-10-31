@@ -1,4 +1,4 @@
-// import './App.css';
+import './App.css';
 
 function App() {
   const gameDeck = require('./deck.json')
@@ -29,18 +29,32 @@ function App() {
 
   return (
     <div className="App">
-      <h1>Player 1 Hand </h1>
-      { 
-        playerHand.map((card, index) => (
-            <img 
-              key={index}
-              src={getCardImageURL(card)}/>
-        ))
-      }
-      <button onClick={handleHit}>
-        Hit
-      </button>
-      <button onClick={handleStay}>Test</button>
+      <div className="container">
+          <div className='dealer'>
+            <h1>Dealer </h1>
+            { 
+              dealerHand.map((card, index) => (
+                  <img 
+                    key={index}
+                    src={getCardImageURL(card)}/>
+              ))
+            }
+          </div>
+          <div className='player'>
+            <h1>Player</h1>
+            { 
+              playerHand.map((card, index) => (
+                  <img 
+                    key={index}
+                    src={getCardImageURL(card)}/>
+              ))
+            }
+          </div>
+          <div class="play-buttons">
+            <button onClick={handleHit}> Hit </button>
+            <button onClick={handleStay}>Stay</button>
+          </div>
+        </div>
     </div>
   );
 }

@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh; /* adjust this to your needs */
+}
+.App button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh; /* adjust this to your needs */
+}
+
+.play-buttons {
+    display: inline;
+    padding: 10px;
+}
+
+.play-buttons button {
+    display: inline-block;
+    height: auto;
+    margin: .25rem;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #000205; /* Bootstrap primary color */
+    border: 1px solid transparent;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: .25rem;
+    color: #fff;
+    transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  
+    /* Hover effect */
+    &:hover {
+      background-color: #0056b3; /* A bit darker than the original color */
+      text-decoration: none;
+    }
+  
+    /* Focus effect */
+    &:focus,
+    &:active {
+      box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, .5);
+      outline: none;
+    }
+  }
+  
