@@ -1,5 +1,5 @@
 import './App.css';
-
+import { useState } from 'react';
 function App() {
   const gameDeck = require('./deck.json')
 
@@ -7,13 +7,17 @@ function App() {
     const cardIndex = Math.floor(Math.random()*gameDeck.length)
     return gameDeck.splice(cardIndex, 1)[0]
   } 
-  const playerHand = [drawCard(), drawCard()]; 
-  const dealerHand = [drawCard(), drawCard()];
-  const cardInPlay = drawCard();
+  const [playerHand, setPlayerHand] = useState([drawCard(), drawCard()]); 
+  const [dealerHand, setDealerHand] = useState([drawCard()])
+
+  
+  const checkForW = () => {
+
+  }
 
   const handleHit = (e) => {
     e.preventDefault()
-    playerHand.push(drawCard());
+    setPlayerHand([...playerHand, drawCard()])
   }
 
   const handleStay = (e) => {
@@ -29,6 +33,9 @@ function App() {
 
   return (
     <div className="App">
+      <div>
+
+      </div>
       <div className="container">
           <div className='dealer'>
             <h1>Dealer </h1>
@@ -52,7 +59,7 @@ function App() {
           </div>
           <div class="play-buttons">
             <button onClick={handleHit}> Hit </button>
-            <button onClick={handleStay}>Stay</button>
+            <button onClick={handleStay}>Stand</button>
           </div>
         </div>
     </div>
