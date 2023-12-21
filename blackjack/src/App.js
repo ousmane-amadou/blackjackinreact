@@ -1,5 +1,7 @@
 import './App.css';
 import { useState } from 'react';
+
+
 function App() {
   const gameDeck = require('./deck.json')
 
@@ -11,8 +13,21 @@ function App() {
   const [dealerHand, setDealerHand] = useState([drawCard()])
 
   
-  const checkForW = () => {
-
+  const checkHand = (hand) => {
+    let handTotal= 0
+    for(let i = 0; i < hand.length; i++) {
+      handTotal += hand[i].value
+    }
+    console.log(handTotal)
+    if (handTotal > 21){
+      return "LOSS";
+    }
+    else if (handTotal == 21) {
+      return "WIN"
+    }
+    else {
+      return "DRAW"
+    }
   }
 
   const handleHit = (e) => {
@@ -21,7 +36,9 @@ function App() {
   }
 
   const handleStay = (e) => {
-    e.preventDefault()
+    while(checkHand(dealerHand) == "DRAW") {
+      setDealerHand([...dealerHand, drawCard()])
+    }
   }
   
   const getCardImageURL = (card) => {
