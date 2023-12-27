@@ -1,9 +1,21 @@
 import './App.css';
 import { useState } from 'react';
 
+const MyComponent = ({ winner }) => {
+  console.log(winner)
+  if (winner === 'dealer') {
+    return <p>The condition is true!</p>;
+  } else {
+    return <p>The condition is false!</p>;
+  }
+};
 
 function Game() {
+  var winner = ""
   const gameDeck = require('./deck.json')
+  
+  const [isButtonDisabled, setButtonDisabled] = useState(false);
+
   const drawCard = () => { 
     const cardIndex = Math.floor(Math.random()*gameDeck.length)
     return gameDeck.splice(cardIndex, 1)[0]
@@ -19,9 +31,11 @@ function Game() {
     }
   
     if (handTotal > 21){
+      setButtonDisabled(true);
       return "LOSS";
     }
     else if (handTotal == 21) {
+      setButtonDisabled(true);
       return "WIN"
     }
     else {
@@ -30,9 +44,14 @@ function Game() {
   }
 
   const handleHit = (e) => {
-    e.preventDefault()
-    setPlayerHand([...playerHand, drawCard()])
-    checkHand(playerHand)
+    const newHand = JSON.parse(JSON.stringify(playerHand))
+    setPlayerHand(newHand)
+    if(checkHand(newHand) == "WIN") {
+      winner = "player"
+    }
+    else if(checkHand) {
+      winner = "dealer"
+    }
   }
 
   const handleStay = (e) => {
@@ -41,6 +60,12 @@ function Game() {
       newHand.push(drawCard())
     }
     setDealerHand(newHand)
+    if(checkHand(newHand) == "WIN") {
+      winner = "dealer"
+    }
+    else {
+      winner = "player"
+    }
   }
   
   const getCardImageURL = (card) => {
@@ -73,9 +98,13 @@ function Game() {
               ))
             }
           </div>
-          <div class="play-buttons">
-            <button onClick={handleHit}> Hit </button>
-            <button onClick={handleStay}> Stand </button>
+          <div className="play-buttons">
+            <button onClick={handleHit} disabled={isButtonDisabled}> Hit </button>
+            <button onClick={handleStay} disabled={isButtonDisabled}> Stand </button>
+          </div>
+          <div>
+
+            <MyComponent winner={{winner}}/>
           </div>
         </div>
     </div>

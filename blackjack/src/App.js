@@ -1,16 +1,18 @@
 import './App.css';
 import Game from './Game';
+import { useState } from 'react';
 
 function App() {
-  const winner = ""
-
   return (
+    // <div>
+    //   { winner ? (
+    //     {winner} 
+    //   ) : (
+    //     <Game playerHand={playerHand} dealerHand={dealerHand}/>
+    //   )}
+    // </div>
     <div>
-      { winner ? (
-        {winner} 
-      ) : (
-        <Game />
-      )}
+      <Game />
     </div>
   );
 }
