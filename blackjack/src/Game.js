@@ -21,50 +21,90 @@ function Game() {
   const [playerHand, setPlayerHand] = useState([drawCard(), drawCard()]); 
   const [dealerHand, setDealerHand] = useState([drawCard()])
 
-  const checkHand = (hand) => {
-    let handTotal = 0
-    
-    for(let i = 0; i < hand.length; i++) {
-      handTotal += hand[i].value
+  const calculateWinner = () => {
+    let playerTotal = 0; let dealerTotal = 0;
+    for(let i = 0; i < playerHand.length; i++) {
+      playerTotal += playerHand[i].value;
     }
-  
-    if (handTotal > 21) {
-      setButtonDisabled(true);
-      return "LOSS"
+    for(let i = 0; i < dealerHand.length; i++) {
+      dealerTotal += dealerHand[i].value;
     }
-    else if (handTotal == 21) {
-      setButtonDisabled(true);
-      return "WIN"
-    }
-    else {
-      return "DRAW"
+    if(playerTotal>dealerTotal){
+      setWinner("player")
+    } else if (playerTotal<dealerTotal){
+      setWinner("dealer")
+    } else {
+      setWinner("draw")
     }
   }
+  // const checkHand = (hand) => {
+  //   let handTotal = 0
+    
+  //   for(let i = 0; i < hand.length; i++) {
+  //     handTotal += hand[i].value
+  //   }
+  
+  //   if (handTotal > 21) {
+  //     setButtonDisabled(true);
+  //     return "LOSS"
+  //   }
+  //   else if (handTotal == 21) {
+  //     setButtonDisabled(true);
+  //     return "WIN"
+  //   }
+  //   else {
+  //     return "PLAYING"
+  //   }
+  // }
 
   const handleHit = (e) => {
     const newHand = JSON.parse(JSON.stringify(playerHand))
 
     newHand.push(drawCard()); setPlayerHand(newHand);
-
-    if(checkHand(newHand) === "WIN") {
-      setWinner("player")
+    
+    let handTotal = 0
+    for(let i = 0; i < newHand.length; i++) {
+      handTotal += newHand[i].value
     }
-    else if(checkHand(newHand) === "LOSS") {
+  
+    if (handTotal > 21) {
+      setButtonDisabled(true);
       setWinner("dealer")
     }
+    else if (handTotal == 21) {
+      setButtonDisabled(true);
+      setWinner("player")
+    } 
+    
   }
 
   const handleStay = (e) => {
     const newHand = JSON.parse(JSON.stringify(dealerHand))
-    while(checkHand(newHand) === "DRAW") {
+
+    let handTotal;
+  
+    do {
       newHand.push(drawCard())
+
+      handTotal = 0;
+      for(let i = 0; i < newHand.length; i++) {
+        handTotal += newHand[i].value
+      }
+      
       setDealerHand(newHand)
-    }
-    if(checkHand(newHand) == "WIN") {
-      setWinner("dealer") 
-    }
-    else {
+      console.log(handTotal)
+    } 
+    while(handTotal < 17);
+    
+    if (handTotal > 21) {
+      setButtonDisabled(true);
       setWinner("player")
+    }
+    else if (handTotal == 21) {
+      setButtonDisabled(true);
+      setWinner("dealer")
+    } else if (handTotal >= 17) {
+      calculateWinner()
     }
   }
   
