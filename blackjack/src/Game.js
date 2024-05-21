@@ -1,19 +1,17 @@
 import './App.css';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
-const MyComponent = ({ winner }) => {
-  console.log(winner)
-  if (winner === 'dealer') {
-    return <p>The condition is true!</p>;
-  } else {
-    return <p>The condition is false!</p>;
+function MyComponent({ winner }) {
+  if (winner == 'dealer') {
+    return <p>Dealer is the winner</p>;
+  } else if (winner == 'player') {
+    return <p>Player is the winner</p>;
   }
 };
 
 function Game() {
-  var winner = ""
   const gameDeck = require('./deck.json')
-  
+  const [winner, setWinner] = useState('');
   const [isButtonDisabled, setButtonDisabled] = useState(false);
 
   const drawCard = () => { 
@@ -24,15 +22,15 @@ function Game() {
   const [dealerHand, setDealerHand] = useState([drawCard()])
 
   const checkHand = (hand) => {
-    let handTotal= 0
+    let handTotal = 0
     
     for(let i = 0; i < hand.length; i++) {
       handTotal += hand[i].value
     }
   
-    if (handTotal > 21){
+    if (handTotal > 21) {
       setButtonDisabled(true);
-      return "LOSS";
+      return "LOSS"
     }
     else if (handTotal == 21) {
       setButtonDisabled(true);
@@ -45,12 +43,14 @@ function Game() {
 
   const handleHit = (e) => {
     const newHand = JSON.parse(JSON.stringify(playerHand))
-    setPlayerHand(newHand)
-    if(checkHand(newHand) == "WIN") {
-      winner = "player"
+
+    newHand.push(drawCard()); setPlayerHand(newHand);
+
+    if(checkHand(newHand) === "WIN") {
+      setWinner("player")
     }
-    else if(checkHand) {
-      winner = "dealer"
+    else if(checkHand(newHand) === "LOSS") {
+      setWinner("dealer")
     }
   }
 
@@ -58,13 +58,13 @@ function Game() {
     const newHand = JSON.parse(JSON.stringify(dealerHand))
     while(checkHand(newHand) === "DRAW") {
       newHand.push(drawCard())
+      setDealerHand(newHand)
     }
-    setDealerHand(newHand)
     if(checkHand(newHand) == "WIN") {
-      winner = "dealer"
+      setWinner("dealer") 
     }
     else {
-      winner = "player"
+      setWinner("player")
     }
   }
   
@@ -78,8 +78,8 @@ function Game() {
   return (
     <div className="App">
       <div className="container">
-          <div className="dealer">
-            <h1>Dealer </h1>
+          <h1>Dealer</h1>
+          <div className='dealer'>
             { 
               dealerHand.map((card, index) => (
                   <img 
@@ -88,8 +88,8 @@ function Game() {
               ))
             }
           </div>
+          <h1>Player</h1>
           <div className='player'>
-            <h1>Player</h1>
             { 
               playerHand.map((card, index) => (
                   <img 
@@ -103,8 +103,7 @@ function Game() {
             <button onClick={handleStay} disabled={isButtonDisabled}> Stand </button>
           </div>
           <div>
-
-            <MyComponent winner={{winner}}/>
+            <MyComponent winner={winner}/>
           </div>
         </div>
     </div>
