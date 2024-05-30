@@ -1,20 +1,27 @@
 .container {
     display: flex;
     align-items: center;
-    flex-direction: column;
+    justify-content: center;
     height: 100vh; /* adjust this to your needs */
+}
+h1 {
+  display: flex;
+  justify-content: center;
+}
+.centered-content {
+  align-items: center;
+  justify-content: center;
 }
 .App button {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh; /* adjust this to your needs */
 }
-
 .play-buttons {
-    display: inline;
+    display: block;
     padding: 10px;
+    margin-top: 10px;
 }
 
 .play-buttons button {
